@@ -70,5 +70,40 @@ router.get('/:id', (req, res) => {
   res.json(FILMS[indexOfFilmFound]);
 });
 
+// Create a pizza to be added to the menu.
+router.post('/', (req, res) => {
+  console.log('POST /films');
+
+  console.log(req.body);
+  let film = {
+    id : undefined,
+    title: req?.body?.title,
+    duration: req?.body?.duration,
+    budget: req?.body?.budget,
+    link: req?.body?.link,
+  };
+
+  console.log(film);
+
+  if (film.title === undefined || film.duration === undefined || film.budget === undefined || film.link === undefined) {
+    return res.status(500).send('Il manque une info pour les films');
+  }
+
+  if (!isNaN(film.duration) && parseInt(film.duration) > 0){
+    if (!isNaN(film.budget) && parseInt(film.budget) > 0){
+      film.budget = parseInt(film.budget);
+      film.duration = parseInt(film.duration);
+    }
+  }
+  const lastItemIndex = FILMS?.length !== 0 ? FILMS.length - 1 : undefined;
+  const lastId = lastItemIndex !== undefined ? FILMS[lastItemIndex]?.id : 0;
+  const nextId = lastId + 1;
+
+  film.id = nextId;
+
+  res.json(film);
+});
+
+
 
 module.exports = router;
