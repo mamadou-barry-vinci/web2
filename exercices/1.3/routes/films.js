@@ -54,10 +54,10 @@ router.get('/', (req, res, next) => {
         filtre.push(element);
       }
     });
-    // res.json(filtre);
+    return res.json(filtre);
   }
   
-  res.json(filtre);
+  res.json(FILMS);
 });
 
 // Read the films identified by an id in the menu
@@ -83,10 +83,8 @@ router.post('/', (req, res) => {
     link: req?.body?.link,
   };
 
-  console.log(film);
-
   if (film.title === undefined || film.duration === undefined || film.budget === undefined || film.link === undefined) {
-    return res.status(500).send('Il manque une info pour les films');
+    return res.status(400).send('Il manque une info pour les films');
   }
 
   if (!isNaN(film.duration) && parseInt(film.duration) > 0){
@@ -94,6 +92,12 @@ router.post('/', (req, res) => {
       film.budget = parseInt(film.budget);
       film.duration = parseInt(film.duration);
     }
+    else{
+      return res.status(400).send('Le budget doit être un entier et strictement positif');
+    }
+  }
+  else{
+    return res.status(400).send('La durée du film doit être un entier et strictement positif');
   }
   const lastItemIndex = FILMS?.length !== 0 ? FILMS.length - 1 : undefined;
   const lastId = lastItemIndex !== undefined ? FILMS[lastItemIndex]?.id : 0;

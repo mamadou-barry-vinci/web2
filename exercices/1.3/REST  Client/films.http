@@ -9,6 +9,6 @@ Content-Type: application/json
 {
     "title":"Nouveaufilm",
     "duration":"150",
-    "budget":"10000",
+    "budget":"10000A",
     "link":"nouveauLien"
 }
