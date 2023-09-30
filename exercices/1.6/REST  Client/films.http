@@ -1,4 +1,4 @@
-### Read all pizzas with File variable
+### Read all films with File variable
 @baseUrl = http://localhost:3000
 GET http://localhost:3000/films
 

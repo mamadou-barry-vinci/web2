@@ -116,15 +116,16 @@ router.post('/', (req, res) => {
 router.delete('/:id', (req, res) => {
   console.log(`DELETE /films/${req.params.id}`);
 
-  let index = undefined;
-  for (let i = 0; i < FILMS.length; i++) {
-    if (FILMS[i].id == req.params.id) {
-      index = i;
-      break;
-    }
-  }
+  let index = FILMS.findIndex(film => film.id == req.params.id);
+  
+  // for (let i = 0; i < FILMS.length; i++) {
+  //   if (FILMS[i].id == req.params.id) {
+  //     index = i;
+  //     break;
+  //   }
+  // }
 
-  if (index === undefined) return res.sendStatus(400);
+  if (index === -1) return res.sendStatus(400);
   let itemRemoved = FILMS.splice(index, 1);
 
   res.json(itemRemoved[0]);
@@ -138,15 +139,9 @@ router.patch('/:id', (req, res) => {
   if (req.body.duration && isNaN(req.body.duration) && parseInt(req.body.duration)>0) return res.sendStatus(400);
   if (req.body.budget && isNaN(req.body.budget) && parseInt(req.body.budget)>0) return res.sendStatus(400);
 
-  let index = undefined;
-  for (let i = 0; i < FILMS.length; i++) {
-    if (FILMS[i].id == req.params.id) {
-      index = i;
-      break;
-    }
-  }
+  let index = FILMS.findIndex(film => film.id == req.params.id);
 
-  if (index === undefined) return res.sendStatus(400);
+  if (index === -1) return res.sendStatus(400);
 
   const updatedFilm = {...FILMS[index], ...req.body};
 
