@@ -35,7 +35,7 @@ const FILMS = [
   },
   {
     id: 5,
-    title: 'Diable',
+    title: 'test',
     duration: 50,
     budget:10000,
     link:'lien5'
