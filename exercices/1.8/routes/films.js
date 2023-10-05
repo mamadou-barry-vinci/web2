@@ -1,12 +1,14 @@
-/* eslint-disable consistent-return */
-/* eslint-disable radix */
 /* eslint-disable no-restricted-globals */
+
 const express = require('express');
 const { serialize, parse } = require('../utils/json');
 
 const router = express.Router();
 
-const jsonDbPath = `${__dirname  }/../data/films.json`;
+// eslint-disable-next-line import/order
+const path = require('node:path');
+
+const jsonDbPath = path.join(__dirname, '/../data/films.json');
 
 const FILMS = [
   {
@@ -108,10 +110,11 @@ router.post('/', (req, res) => {
     if (FILMS[i].title === film.title) return res.sendStatus(409);
   }
 
-  if (!isNaN(film.duration) && parseInt(film.duration) > 0){
-    if (!isNaN(film.budget) && parseInt(film.budget) > 0){
-      film.budget = parseInt(film.budget);
-      film.duration = parseInt(film.duration);
+  
+  if (!isNaN(film.duration) && parseInt(film.duration, 10) > 0){
+    if (!isNaN(film.budget) && parseInt(film.budget, 10) > 0){
+      film.budget = parseInt(film.budget, 10);
+      film.duration = parseInt(film.duration, 10);
     }
     else{
       return res.status(400).send('Le budget doit être un entier et strictement positif');
@@ -131,7 +134,7 @@ router.post('/', (req, res) => {
 
   serialize(jsonDbPath, films);
 
-  res.json(films);
+  return res.json(films);
 });
 
 router.delete('/:id', (req, res) => {
@@ -139,7 +142,7 @@ router.delete('/:id', (req, res) => {
 
   const films = parse(jsonDbPath, FILMS);
 
-  const index = films.findIndex(film => film.id === parseInt(req.params.id));
+  const index = films.findIndex(film => film.id === parseInt(req.params.id, 10));
   
   // for (let i = 0; i < FILMS.length; i++) {
   //   if (FILMS[i].id == req.params.id) {
@@ -153,7 +156,7 @@ router.delete('/:id', (req, res) => {
 
   serialize(jsonDbPath, films);
 
-  res.json(itemRemoved[0]);
+  return res.json(itemRemoved[0]);
 });
 
 // Update a pizza based on its id and new values for its parameters
@@ -161,12 +164,12 @@ router.patch('/:id', (req, res) => {
   console.log(`PATCH /pizzas/${req.params.id}`);
 
   if (!req.body.title && !req.body.duration && !req.body.budget && !req.body.link) return res.sendStatus(400);
-  if (req.body.duration && isNaN(req.body.duration) && parseInt(req.body.duration)>0) return res.sendStatus(400);
-  if (req.body.budget && isNaN(req.body.budget) && parseInt(req.body.budget)>0) return res.sendStatus(400);
+  if (req.body.duration && isNaN(req.body.duration) && parseInt(req.body.duration, 10)>0) return res.sendStatus(400);
+  if (req.body.budget && isNaN(req.body.budget) && parseInt(req.body.budget, 10)>0) return res.sendStatus(400);
 
   const films = parse(jsonDbPath, FILMS);
 
-  const index = films.findIndex(film => film.id === parseInt(req.params.id));
+  const index = films.findIndex(film => film.id === parseInt(req.params.id, 10));
 
   if (index === -1) return res.sendStatus(400);
 
@@ -176,7 +179,7 @@ router.patch('/:id', (req, res) => {
 
   serialize(jsonDbPath, films);
 
-  res.json(updatedFilm);
+  return res.json(updatedFilm);
 });
 
 
@@ -185,15 +188,15 @@ router.put('/:id', (req, res) => {
   console.log(`PATCH /pizzas/${req.params.id}`);
 
   if (!req.body.title && !req.body.duration && !req.body.budget && !req.body.link) return res.sendStatus(400);
-  if (req.body.duration && isNaN(req.body.duration) && parseInt(req.body.duration)>0) return res.sendStatus(400);
-  if (req.body.budget && isNaN(req.body.budget) && parseInt(req.body.budget)>0) return res.sendStatus(400);
+  if (req.body.duration && isNaN(req.body.duration) && parseInt(req.body.duration, 10)>0) return res.sendStatus(400);
+  if (req.body.budget && isNaN(req.body.budget) && parseInt(req.body.budget, 10)>0) return res.sendStatus(400);
 
   const films = parse(jsonDbPath, FILMS);
 
   let index;
   // eslint-disable-next-line no-plusplus
   for (let i = 0; i < films.length; i++) {
-    if (films[i].id === parseInt((req.params.id))) {
+    if (films[i].id === parseInt(req.params.id, 10)) {
       index = i;
       break;
     }
