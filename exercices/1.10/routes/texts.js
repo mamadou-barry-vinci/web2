@@ -11,14 +11,12 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
     const level = req?.query?.level;
-    console.log(level);
     const allTexts = readAllTexts(level);
     if (allTexts === undefined) res.sendStatus(400);
     return res.json(allTexts);
   });
 
   router.get('/:id', (req, res) => {
-    console.log(req.params.id);
     const text = getTextId(req.params.id);
     if (text === undefined) return res.sendStatus(400);
     return res.json(text);
