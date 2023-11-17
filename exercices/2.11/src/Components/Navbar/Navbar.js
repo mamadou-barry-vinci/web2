@@ -42,6 +42,9 @@ const Navbar = () => {
               <li class="nav-item">
                 <a class="nav-link" href="#" data-uri="/register">S'inscrire</a>
               </li>   
+              <li class="nav-item">
+                <a class="nav-link" href="#" data-uri="/myProfil">Mon profil</a>
+              </li>   
             </ul>
           </div>
         </div>
