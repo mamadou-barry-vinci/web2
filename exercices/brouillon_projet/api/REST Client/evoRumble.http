@@ -1,7 +1,0 @@
-######### NORMAL OPERATION  ###########
-
-### Read all pizzas with File variable
-@baseUrl = http://localhost:3000
-GET {{baseUrl}}/evoRumble
-### Read all the monsters with the type given
-GET {{baseUrl}}/evoRumble/feu
