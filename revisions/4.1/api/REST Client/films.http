@@ -1,0 +1,78 @@
+
+
+@baseUrl = http://localhost:3000
+@baseUrlFilms= http://localhost:3000/films
+
+### Read all films
+GET {{baseUrl}}/films
+
+### find films by id
+GET {{baseUrlFilms}}/1
+
+### find by minimum duration
+GET {{baseUrlFilms}}/?minimum-duration=160
+
+
+
+### delete film
+DELETE {{baseUrlFilms}}/4
+
+### Update the pizza identified by 6
+PATCH {{baseUrlFilms}}/4
+Content-Type: application/json
+
+{
+    "title":"NICOLAe"
+}
+
+### put
+PUT {{baseUrlFilms}}/2
+Content-Type: application/json
+
+{
+    "title": "aezfz",
+    "duration": 100,
+    "budjet": 100002,
+    "link": "jeajefa.com"
+}
+
+
+
+@baseUrlUser = http://localhost:3000
+
+### connect a user
+##### Define a request variable nammed admin :
+# @name userconnected
+POST {{baseUrlUser}}/users/login
+Content-Type: application/json
+
+{
+    "username":"eric",
+    "password":"eric"
+}
+
+### add a films
+POST {{baseUrlFilms}}/
+Content-Type: application/json
+Authorization: {{userconnected.response.body.token}} 
+
+{
+    "title": "kbaajpb",
+    "duration": 100,
+    "budjet": 100002, 
+    "link": "jeajefa.com"
+}
+
+
+
+
+### add a user
+POST {{baseUrlUser}}/users/register
+Content-Type: application/json
+
+{
+    "username":"test",
+    "password":"test"
+}
+
+

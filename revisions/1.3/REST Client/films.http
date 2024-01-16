@@ -1,0 +1,20 @@
+### Read all films
+GET http://localhost:3000/films
+
+### Read all films with min duration
+GET http://localhost:3000/films?minimum-duration=150
+
+
+### Read the film with id = 1
+GET http://localhost:3000/films/1
+
+### Add a new film
+POST http://localhost:3000/films
+Content-Type: application/json
+
+{
+    "title":"Nouveaufilm",
+    "duration":"150",
+    "budget":"10000",
+    "link":"nouveauLien"
+}
